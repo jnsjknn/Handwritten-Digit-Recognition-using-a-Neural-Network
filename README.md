@@ -4,6 +4,12 @@ The purpose of this project is mostly to help me learn programming but I will ev
 
 I encourage anyone to contribute to this project! See [CONTRIBUTING](CONTRIBUTING.md)
 
+##### Tasklist
+
+- Create a simple app for cleaning the data
+    - Check for mislabeled data
+    - Check for data that does not contain digits at all
+
 ## Dataset
 
 To create the dataset, I coded and published [a public web app](https://joonasjokinen.fi/handwritten-digit-classification/datageneration), where anybody can draw digits. The app posts the pixel data and the label to a [Google Cloud Firestore database](https://firebase.google.com/products/firestore/) I set up.
