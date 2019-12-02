@@ -62,7 +62,7 @@ function pushToFirebase(nameinput) {
     return true;
   }).shuffle();
   for (let i=0;i<imageset.length;i++) {
-    db.collection("newdata").add(imageset[i])
+    db.collection("newdata2").add(imageset[i])
       .then(function(docRef) {
         if (i==0) {
           setError('Please wait!', 3000);
