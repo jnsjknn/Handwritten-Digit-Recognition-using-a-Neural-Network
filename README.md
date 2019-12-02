@@ -6,7 +6,7 @@ I encourage anyone to contribute to this project! See [CONTRIBUTING](CONTRIBUTIN
 
 ## Dataset
 
-To create the dataset, I coded and published [a public web app](https://joonasjokinen.fi/handwritten-digit-classification/datageneration) I coded, where anybody can draw digits. The app posts the pixel data and the label to a [Google Cloud Firestore database](https://firebase.google.com/products/firestore/) I set up.
+To create the dataset, I coded and published [a public web app](https://joonasjokinen.fi/handwritten-digit-classification/datageneration), where anybody can draw digits. The app posts the pixel data and the label to a [Google Cloud Firestore database](https://firebase.google.com/products/firestore/) I set up.
 
 **The web app is still online and submitted digits are still being added to the dataset.**
 
