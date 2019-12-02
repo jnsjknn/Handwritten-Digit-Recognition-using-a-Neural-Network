@@ -160,3 +160,23 @@ button#clearCanvas {
 button:focus {
   outline: 0;
 }
+
+@media screen and (max-width: 1000px) {
+  #ad-elm {
+    display: none;
+  }
+}
+@media screen and (min-width: 1001px) {
+  #ad-elm {
+    display: block;
+  }
+}
+#ad-elm {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  bottom: 20px;
+  border: 1px solid black;
+  max-width: 200px;
+  width: 200px;
+}
