@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Handwritten digit classification app</title>
+  <meta name="description" content="A simple web app using a neural network to classify digits drawn by the user.">
+
+  <meta property="og:title" content="Handwritten digit classification app" />
+  <meta property="og:url" content="https://joonasjokinen.fi/handwritten-digit-classification/" />
+  <meta property="og:description" content="A simple web app using a neural network to classify digits drawn by the user" />
+  <meta property="og:image" content="dataset.png" />
+
+  <meta name="twitter:title" content="Handwritten digit classification app">
+  <meta name="twitter:description" content="Help me collect a dataset of digits for a computer vision project.">
+  <meta name="twitter:image" content="dataset.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="lib/helper.js"></script>
+  <script src="lib/matrix.js"></script>
+  <script src="lib/neuralnetwork.js"></script>
+  <script src="index.js"></script>
+  <script src="UI.js"></script>
+</head>
+
+<body>
+  <div id="numberGuesser">
+    <div id="helpOverlay">
+      <p>Simply draw a digit on the canvas with your mouse or finger!</p>
+      <p>The neural network tries to guess which digit you drew.</p>
+      <p>For example, if you see this:</p>
+      <img id="helpImg" src="assets/help.png" alt="Image of confidence bars"><br>
+      <p>the neural network thinks you most likely drew a 1 and possibly a 7.</p>
+    </div>
+    <div id="infoOverlay">
+      <p>
+        This app uses a pure JavaScript neural network to recognize
+        hand written digits. To train the neural network I collected
+        a dataset of rougly 14000 handwritten digits. The digits were
+        draw by more than 200 volunteers.
+      </p>
+      <p>You can
+        <a href="https://joonasjokinen.fi/handwritten-digit-classification/datageneration" target="_blank" class="hoverEffect">help make the dataset larger</a>.
+        For more information about the project, take a look at
+        <a href="https://github.com/jnsjknn/handwritten-digit-classification" target="_blank" class="hoverEffect">this project on Github</a>.
+      </p>
+      <img id="portrait" src="assets/joonasjokinen.png" alt="Image of Joonas Jokinen">
+      <div id="socialWrapper">
+        <a class="social hoverEffect" href="https://joonasjokinen.fi" target="_blank"><button><i class="fa fa-globe" onclick=""></i> Website</button></a>
+        <a class="social hoverEffect" href="https://github.com/jnsjknn" target="_blank"><button><i class="fab fa-github" onclick=""></i> Github</button></a>
+        <a class="social hoverEffect" href="https://www.linkedin.com/in/joonasjokinen" target="_blank"><button><i class="fab fa-linkedin" onclick=""></i> LinkedIn</button></a>
+        <a class="social hoverEffect" href="https://www.instagram.com/jnsjknn" target="_blank"><button><i class="fab fa-instagram" onclick=""></i> Instagram</button></a>
+      </div>
+    </div>
+    <i class="icon fa fa-question-circle helpButton hoverEffect" onclick="toggleHelp()"></i>
+    <i class="icon fa fa-info-circle infoButton hoverEffect" onclick="toggleInfo()"></i>
+    <div id="canvasDiv"></div>
+    <button id="toggleEraser" class="hoverEffect" onclick="toggleEraser()">
+      <i class="fa fa-pen"></i>
+      <i class="fa fa-eraser" style="opacity: 0.5"></i>
+    </button>
+    <button id="clearCanvas" class="hoverEffect" onclick="clearCanvas()">Clear canvas</button><br>
+    <p>What the network thinks you're drawing</p>
+    <div id="guess">
+      <span class="confbar" id="confbar0">0</span>
+      <span class="confbar" id="confbar1">1</span>
+      <span class="confbar" id="confbar2">2</span>
+      <span class="confbar" id="confbar3">3</span>
+      <span class="confbar" id="confbar4">4</span>
+      <span class="confbar" id="confbar5">5</span>
+      <span class="confbar" id="confbar6">6</span>
+      <span class="confbar" id="confbar7">7</span>
+      <span class="confbar" id="confbar8">8</span>
+      <span class="confbar" id="confbar9">9</span>
+    </div>
+  </div>
+</body>
+
+</html>
