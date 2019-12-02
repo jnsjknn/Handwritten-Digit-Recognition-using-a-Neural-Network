@@ -9,6 +9,7 @@
   <title></title>
   <style>
   canvas {border: 1px solid black}
+  button {min-width: 30px; min-height: 30px;margin: 10px}
   </style>
 </head>
 
@@ -33,7 +34,7 @@
   <h1 id="label"></h1>
   <input id="pass" type="text"><button id="passBtn" onclick="allowEditing()">Go</button><br>
   <div id="hide" style="display:none">
-    <button onclick="remove()">Remove</button>
+    <button onclick="del()">Remove</button>
     <button onclick="rewrite(0)">0</button>
     <button onclick="rewrite(1)">1</button>
     <button onclick="rewrite(2)">2</button>

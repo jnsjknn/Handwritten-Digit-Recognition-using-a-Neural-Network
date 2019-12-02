@@ -1,7 +1,7 @@
 let image;
-
+let collection = 'newdata';
 function getDocument() {
-  db.collection('newdata').where('checked', '==', false).limit(1).get()
+  db.collection(collection).where('checked', '==', false).limit(1).get()
     .then(snapshot => {
       snapshot.forEach(val => {
         const obj = val.data();
@@ -13,7 +13,7 @@ function getDocument() {
 function rewrite(newlabel = image.label) {
   image.label = newlabel;
   image.checked = true;
-  db.collection('newdata').doc(image.id).set(image)
+  db.collection(collection).doc(image.id).set(image)
     .then(function() {
       console.log("Document successfully written!");
     })
@@ -22,9 +22,8 @@ function rewrite(newlabel = image.label) {
     });
   setTimeout(() => getDocument(), 500);
 }
-function remove() {
-  image.remove = true;
-  db.collection('newdata').doc(image.id).delete()
+function del() {
+  db.collection(collection).doc(image.id).delete()
     .then(function() {
       console.log("Document successfully deleted!");
     })
