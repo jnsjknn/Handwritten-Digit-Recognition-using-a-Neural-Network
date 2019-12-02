@@ -176,7 +176,6 @@ button:focus {
   right: 20px;
   top: 20px;
   bottom: 20px;
-  border: 1px solid black;
   max-width: 200px;
   width: 200px;
 }
