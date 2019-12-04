@@ -1,5 +1,6 @@
 let image;
 let collection = 'newdata';
+
 function getDocument() {
   db.collection(collection).where('checked', '==', false).limit(1).get()
     .then(snapshot => {
@@ -10,6 +11,7 @@ function getDocument() {
       })
     }).catch(err => console.log(err));
 }
+
 function rewrite(newlabel = image.label) {
   image.label = newlabel;
   image.checked = true;
@@ -22,6 +24,7 @@ function rewrite(newlabel = image.label) {
     });
   setTimeout(() => getDocument(), 500);
 }
+
 function del() {
   db.collection(collection).doc(image.id).delete()
     .then(function() {
@@ -41,6 +44,7 @@ function setup() {
 function draw() {
   if (image) drawImage();
 }
+
 function drawImage() {
   if (image.remove) getDocument();
   document.querySelector('#label').innerHTML = image.label;
@@ -59,7 +63,7 @@ function drawImage() {
 function allowEditing() {
   const pass = document.querySelector('#pass').value;
   console.log(pass);
-  if(pass == 'jns') {
+  if (pass.toLowerCase() == 'jns') {
     document.querySelector('#hide').style.display = 'block';
     document.querySelector('#pass').style.display = 'none';
     document.querySelector('#passBtn').style.display = 'none';
@@ -67,17 +71,14 @@ function allowEditing() {
   }
 }
 
-
-
-
-
 const promises = [
-  fetch('../data/numbers/0.json').then(res=>res.json()),
-  fetch('../data/numbers/1.json').then(res=>res.json())
+  fetch('../data/numbers/0.json').then(res => res.json()),
+  fetch('../data/numbers/1.json').then(res => res.json())
 ]
 let combined;
+
 function loadAndCombine() {
   Promise.all(promises)
-  .then(data => data.reduce((a,b)=>a.concat(b)))
-  .then(data => combined = data);
+    .then(data => data.reduce((a, b) => a.concat(b)))
+    .then(data => combined = data);
 }
