@@ -1,6 +1,6 @@
 let numberPoints = [];
 let eraserOn = false;
-let nn = new NeuralNetwork(784, 200, 40, 10);
+let nn = new NeuralNetwork(784, 300, 60, 10);
 
 fetch('data/NN2.json')
   .then(res => res.json())
