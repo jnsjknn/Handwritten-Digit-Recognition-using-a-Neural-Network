@@ -540,7 +540,8 @@
     ]
   },
   "training": {
-    "info": "60 Epochs, learningRate divided by 2 every 5 epochs",
-    "error_rate": 23.170731707317074
+    "info": "60 Epochs, learningRate 0.01 and divided by 2 every 5 epochs",
+    "dataset": "~13900 uncleaned digits without normalization"
+    "accuracy": 76.8292682927
   }
 }

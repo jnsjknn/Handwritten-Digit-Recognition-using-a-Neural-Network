@@ -2,7 +2,7 @@ let numberPoints = [];
 let eraserOn = false;
 let nn = new NeuralNetwork(784, 200, 40, 10);
 
-fetch('data/NN.json')
+fetch('data/NN2.json')
   .then(res => res.json())
   .then(taughtnn => {
     nn.weights_ih1.values = taughtnn.weights_ih1.values;
@@ -33,7 +33,7 @@ function guess() {
     // const confidences = [1,1,1,1,1,1,1,1,1];
     for (let i = 0; i < confidences.length; i++) {
       const elm = document.querySelector(`#confbar${i}`);
-      elm.style.height = (100 * confidences[i] + 17) + '%';
+      elm.style.height = (100 * confidences[i] + 5) + '%';
     }
   }
 }

@@ -1,18 +1,24 @@
 const options = {
-  learningRate: 0.1,
-  epochs: 50,
+  learningRate: 0.01,
+  epochs: 20,
   learningRateDivider: 2,
-  modifyLearningRateEvery: 1,
+  modifyLearningRateEvery: 5,
   verbose: true,
-  test: 'onEpochEnd',
-  errorTreshold: 10,
-  batchSize: 32
+  testOnEpochEnd: true,
+  accuracyTreshold: 99.9,
+  batchSize: 1
 }
 
-const nn = new NeuralNetwork(784, 400, 80, 10);
+const nn = new NeuralNetwork(784, 300, 60, 10);
 
 async function train(options) {
+  console.log(options);
   let data = await fetch('../data/dataset.json').then(res => res.json());
+  data = data.map(datapt => {
+    const obj = datapt;
+    obj.image = normalize(obj.image);
+    return obj;
+  })
   data = data.shuffle();
   const trainingData = data.slice(0, Math.floor(data.length * 0.9));
   const testingData = data.slice(Math.floor(data.length * 0.9), data.length - 1)
@@ -23,47 +29,39 @@ async function train(options) {
   for (let i = 0; i < options.epochs; i++) {
     if (i != 0 && i % options.modifyLearningRateEvery == 0) {
       nn.setLearningRate(nn.learning_rate / options.learningRateDivider);
-      console.log('Learning rate modified: ' + nn.learning_rate);
+      console.log('%c Learning rate modified: ' + nn.learning_rate, 'background: rgba(0,43,193,0.3)');
     }
     const shuffled = trainingData.shuffle();
     shuffled.forEach((datapoint, index) => {
       nn.train(datapoint.image, datapoint.label);
-      if (options.verbose && index % 5000 == 0 && index != 0) {
-        let logText = ''
-        const progress = 100 * nn.learned / iterations;
-        logText += 'Progress:' + progress.toFixed(4) + '%\n';
-
+      if (options.verbose && nn.learned % 2000 == 0) {
         const time = new Date().getTime();
         const elapsedMill = time - startTime;
-        const elapsedMin = elapsedMill / 1000 / 60;
-        const elapsedSec = (elapsedMin - Math.floor(elapsedMin)) * 60;
-        logText += 'Elapsed time: ' + Math.floor(elapsedMin) + 'min ' + Math.floor(elapsedSec) + 's\n';
-
         const speed = nn.learned / elapsedMill;
         const timeLeftMill = (iterations - nn.learned) / speed;
         const timeLeftMin = timeLeftMill / 1000 / 60;
         const timeLeftSec = (timeLeftMin - Math.floor(timeLeftMin)) * 60;
-        logText += 'Time left: ' + Math.floor(timeLeftMin) + 'min ' + Math.floor(timeLeftSec) + 's\n';
-
-        const trainingError = nn.output_errors.values.reduce((a, b) => Math.abs(a) + Math.abs(b)) * 10;
-        logText += 'Training error: ' + trainingError.toFixed(4) + '%';
+        let logText = `Estim. remaining: ${Math.floor(timeLeftMin)}min ${Math.floor(timeLeftSec)}s (${Math.floor(speed*1000)} iter/s)\n`
+        logText += `Total progress: ${(100 * nn.learned / iterations).toFixed(3)} %\n`;
+        logText += `Epoch progress: ${(100 * index / shuffled.length).toFixed(3)} %\n`;
+        logText += `Epoch: ${(i + 1)}/${options.epochs}`;
         console.log(logText);
       }
     });
-    if (options.test == 'onEpochEnd') {
-      const testError = test(testingData);
-      console.log('Testing error: ' + testError + ' Epoch: ' + (i + 1) + '/' + options.epochs);
-      if (testError < options.errorTreshold) {
-        console.log('Training stopped: Reached error treshold!');
+
+    if (options.testOnEpochEnd == true) {
+      const testAccuracy = test(testingData);
+      console.log('%c Testing accuracy: ' + testAccuracy + ' Epoch: ' + (i + 1) + '/' + options.epochs, 'background: rgba(0,193,48,0.3); font-weight: bold');
+      if (testAccuracy > options.accuracyTreshold) {
+        console.log('Training stopped: Reached accuracy treshold!');
         return;
       }
     }
   }
-  if (options.test == 'afterTraining') {
-    const testError = test(testingData);
-    console.log('Testing error: ' + testError);
-    console.log('Training finished.')
-  }
+  const testAccuracy = test(testingData);
+  console.log('%c Training finished ', 'background: rgba(0,193,48,1); font-weight: bold; text-transform: uppercase; font-size: 30px')
+  console.log(options);
+  nn.trainingOptions = options;
 }
 
 function test(testingData) {
@@ -90,6 +88,6 @@ function test(testingData) {
     if (guess == testingData[index].label) correct++;
     total++;
   });
-  const testError = 100 - (100 * correct / total);
-  return testError;
+  const testAccuracy = 100 * correct / total;
+  return testAccuracy;
 }
