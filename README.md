@@ -46,12 +46,11 @@ You can download the data [here](data/dataset.json)
 
 ```javascript
 let data;
-getDataset = async () => {
+(async () => {
   const URL = 'https://raw.githubusercontent.com/jnsjknn/handwritten-digit-classification/master/data/dataset.json'
   data = await fetch(URL).then(res=>res.json());
-}
-getDataset();
-// data becomes: Array(13942) [{...}, {...}, {...}, ..., {...}]
+})()
+// data becomes: Array(13942) [{...}, {...}, ..., {...}]
 ```
 
 ## The neural network
